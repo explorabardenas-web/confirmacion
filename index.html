@@ -1,86 +1,82 @@
 <!DOCTYPE html>
-<html lang="auto">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reserva confirmada</title>
+
 <style>
 body{
   margin:0;
-  background:#f4f6fb;
-  font-family:Arial, Helvetica, sans-serif;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
+  background:#f4f6fb;
+  font-family:Arial, sans-serif;
 }
+
 .card{
   background:white;
   width:100%;
   max-width:600px;
-  border-radius:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-  overflow:hidden;
-}
-.header{
-  padding:20px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  padding:30px 24px;
   text-align:center;
 }
+
 .logo{
-  width:120px;
+  width:140px;
   margin-bottom:10px;
 }
+
 .check{
   width:70px;
   height:70px;
   border-radius:50%;
   background:#16a34a;
   color:white;
-  font-size:40px;
+  font-size:36px;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:10px auto;
+  margin:15px auto;
 }
+
 h1{
-  margin:10px 0 4px 0;
+  margin:10px 0 5px;
   letter-spacing:2px;
 }
-.subtitle{
+
+.sub{
   color:#555;
-  margin-bottom:10px;
+  margin-bottom:20px;
 }
-.content{
-  padding:20px;
+
+.data{
+  text-align:left;
+  background:#f8fafc;
+  border-radius:12px;
+  padding:15px;
+  font-size:14px;
 }
+
 .row{
   display:flex;
   justify-content:space-between;
   padding:8px 0;
   border-bottom:1px solid #e5e7eb;
 }
-.row span:first-child{
-  font-weight:bold;
-}
-.actions{
-  text-align:center;
-  padding:20px;
-}
-.actions a{
-  display:inline-block;
-  margin:6px;
-  padding:10px 18px;
-  border-radius:8px;
-  text-decoration:none;
-  color:white;
-  font-size:14px;
-}
-.cancel{background:#dc2626;}
-.reschedule{background:#2563eb;}
+.row:last-child{border-bottom:none;}
+
+.label{font-weight:bold;color:#334155;}
+.value{color:#0f172a;}
+
 .footer{
-  text-align:center;
-  padding:10px;
+  margin-top:15px;
+  color:#64748b;
   font-size:13px;
-  color:#666;
 }
 </style>
 </head>
@@ -89,78 +85,53 @@ h1{
 
 <div class="card">
 
-  <div class="header">
-    <!-- TU LOGO -->
-    <img class="logo" src="https://raw.githubusercontent.com/modelaiprob-tech/reservas-confirmada/main/logo-explora-bardenas.png">
-    <div class="check">✓</div>
-    <h1 id="title">RESERVA CONFIRMADA</h1>
-    <div class="subtitle" id="subtitle">TE ESPERAMOS 🤗</div>
+  <!-- AQUÍ TU LOGO -->
+  <img src="URL_DEL_LOGO_DE_EXPLORA_BARDENAS" class="logo">
+
+  <div class="check">✓</div>
+
+  <h1>RESERVA CONFIRMADA</h1>
+  <p class="sub">Te esperamos 🤗</p>
+
+  <div class="data" id="dataBox" style="display:none;">
+    <div class="row"><div class="label">Nombre</div><div class="value" id="name"></div></div>
+    <div class="row"><div class="label">Email</div><div class="value" id="email"></div></div>
+    <div class="row"><div class="label">Teléfono</div><div class="value" id="phone"></div></div>
+    <div class="row"><div class="label">Nº personas</div><div class="value" id="people"></div></div>
+    <div class="row"><div class="label">Notas</div><div class="value" id="notes"></div></div>
   </div>
 
-  <div class="content">
-    <div class="row"><span id="l-name">Nombre</span><span id="v-name">-</span></div>
-    <div class="row"><span id="l-email">Email</span><span id="v-email">-</span></div>
-    <div class="row"><span id="l-phone">Teléfono</span><span id="v-phone">-</span></div>
-    <div class="row"><span id="l-people">Nº personas</span><span id="v-people">-</span></div>
-    <div class="row"><span id="l-notes">Notas</span><span id="v-notes">-</span></div>
-  </div>
-
-  <div class="actions">
-    <a id="cancel" class="cancel" href="#" style="display:none;">Cancelar reserva</a>
-    <a id="reschedule" class="reschedule" href="#" style="display:none;">Reprogramar</a>
-  </div>
-
-  <div class="footer">
-    — Explora Bardenas
-  </div>
-
+  <div class="footer">Explora Bardenas</div>
 </div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
 
-let lang = params.get("lang") || navigator.language.slice(0,2);
-if(!["es","en","fr","it"].includes(lang)) lang = "en";
-
-const T = {
-es:{title:"RESERVA CONFIRMADA",sub:"TE ESPERAMOS 🤗",name:"Nombre",email:"Email",phone:"Teléfono",people:"Nº personas",notes:"Notas",cancel:"Cancelar reserva",reschedule:"Reprogramar"},
-en:{title:"BOOKING CONFIRMED",sub:"We’ll see you soon 🤗",name:"Name",email:"Email",phone:"Phone",people:"Number of people",notes:"Notes",cancel:"Cancel booking",reschedule:"Reschedule"},
-fr:{title:"RÉSERVATION CONFIRMÉE",sub:"À très bientôt 🤗",name:"Nom",email:"Email",phone:"Téléphone",people:"Nombre de personnes",notes:"Notes",cancel:"Annuler",reschedule:"Reprogrammer"},
-it:{title:"PRENOTAZIONE CONFERMATA",sub:"Ti aspettiamo 🤗",name:"Nome",email:"Email",phone:"Telefono",people:"Numero di persone",notes:"Note",cancel:"Annulla",reschedule:"Riprenota"}
+const get = (...keys) => {
+  for (const k of keys) {
+    if (params.get(k)) return params.get(k);
+  }
+  return "";
 };
 
-const t = T[lang];
+const data = {
+  name: get("name"),
+  email: get("email"),
+  phone: get("phone"),
+  people: get("people", "people_count"),
+  notes: get("notes")
+};
 
-document.getElementById("title").innerText = t.title;
-document.getElementById("subtitle").innerText = t.sub;
-document.getElementById("l-name").innerText = t.name;
-document.getElementById("l-email").innerText = t.email;
-document.getElementById("l-phone").innerText = t.phone;
-document.getElementById("l-people").innerText = t.people;
-document.getElementById("l-notes").innerText = t.notes;
-
-document.getElementById("v-name").innerText = params.get("name") || "-";
-document.getElementById("v-email").innerText = params.get("email") || "-";
-document.getElementById("v-phone").innerText = params.get("phone") || "-";
-document.getElementById("v-people").innerText = params.get("people") || "-";
-document.getElementById("v-notes").innerText = params.get("notes") || "-";
-
-const cancel = params.get("cancel");
-const reschedule = params.get("reschedule");
-
-if(cancel){
-  const c = document.getElementById("cancel");
-  c.href = cancel;
-  c.innerText = t.cancel;
-  c.style.display="inline-block";
-}
-if(reschedule){
-  const r = document.getElementById("reschedule");
-  r.href = reschedule;
-  r.innerText = t.reschedule;
-  r.style.display="inline-block";
+if (Object.values(data).some(v => v)) {
+  document.getElementById("dataBox").style.display = "block";
+  document.getElementById("name").textContent = data.name || "—";
+  document.getElementById("email").textContent = data.email || "—";
+  document.getElementById("phone").textContent = data.phone || "—";
+  document.getElementById("people").textContent = data.people || "—";
+  document.getElementById("notes").textContent = data.notes || "—";
 }
 </script>
 
 </body>
 </html>
+
