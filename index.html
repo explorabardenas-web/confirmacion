@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reserva confirmada</title>
+<title>Booking confirmed</title>
 
 <style>
 body{
@@ -22,13 +22,13 @@ body{
   max-width:600px;
   border-radius:18px;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
-  padding:30px 24px;
+  padding:40px 24px;
   text-align:center;
 }
 
 .logo{
   width:140px;
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 
 .check{
@@ -41,7 +41,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:15px auto;
+  margin:20px auto;
 }
 
 h1{
@@ -51,27 +51,8 @@ h1{
 
 .sub{
   color:#555;
-  margin-bottom:20px;
+  font-size:18px;
 }
-
-.data{
-  text-align:left;
-  background:#f8fafc;
-  border-radius:12px;
-  padding:15px;
-  font-size:14px;
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 0;
-  border-bottom:1px solid #e5e7eb;
-}
-.row:last-child{border-bottom:none;}
-
-.label{font-weight:bold;color:#334155;}
-.value{color:#0f172a;}
 
 .footer{
   margin-top:15px;
@@ -85,58 +66,43 @@ h1{
 
 <div class="card">
 
-  <!-- AQUÍ TU LOGO -->
   <img src="https://raw.githubusercontent.com/explorabardenas-web/confirmacion/69e171c62594b66ded98c6619639cd535f8a1c82/LOGO-EXPLORA-BARDENAS.png" class="logo">
 
   <div class="check">✓</div>
 
-  <h1>RESERVA CONFIRMADA</h1>
-  <p class="sub">Te esperamos </p>
-
-  <div class="data" id="dataBox" style="display:none;">
-    <div class="row"><div class="label">Nombre</div><div class="value" id="name"></div></div>
-    <div class="row"><div class="label">Email</div><div class="value" id="email"></div></div>
-    <div class="row"><div class="label">Teléfono</div><div class="value" id="phone"></div></div>
-    <div class="row"><div class="label">Nº personas</div><div class="value" id="people"></div></div>
-    <div class="row"><div class="label">Notas</div><div class="value" id="notes"></div></div>
-  </div>
+  <h1 id="title">BOOKING CONFIRMED</h1>
+  <p class="sub" id="subtitle">We’ll see you soon </p>
 
   <div class="footer">Explora Bardenas</div>
+
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-
-const get = (...keys) => {
-  for (const k of keys) {
-    if (params.get(k)) return params.get(k);
+const texts = {
+  es: {
+    title: "RESERVA CONFIRMADA",
+    subtitle: "Te esperamos "
+  },
+  en: {
+    title: "BOOKING CONFIRMED",
+    subtitle: "We’ll see you soon "
+  },
+  fr: {
+    title: "RÉSERVATION CONFIRMÉE",
+    subtitle: "À très bientôt "
+  },
+  it: {
+    title: "PRENOTAZIONE CONFERMATA",
+    subtitle: "Ti aspettiamo "
   }
-  return "";
 };
 
-const data = {
-  name: get("name"),
-  email: get("email"),
-  phone: get("phone"),
-  people: get("people", "people_count"),
-  notes: get("notes")
-};
+let lang = navigator.language.slice(0,2);
+if (!texts[lang]) lang = "en"; // Idioma por defecto SIEMPRE inglés
 
-if (Object.values(data).some(v => v)) {
-  document.getElementById("dataBox").style.display = "block";
-  document.getElementById("name").textContent = data.name || "—";
-  document.getElementById("email").textContent = data.email || "—";
-  document.getElementById("phone").textContent = data.phone || "—";
-  document.getElementById("people").textContent = data.people || "—";
-  document.getElementById("notes").textContent = data.notes || "—";
-}
+document.getElementById("title").textContent = texts[lang].title;
+document.getElementById("subtitle").textContent = texts[lang].subtitle;
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
