@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reserva confirmada</title>
 <link rel="icon" type="image/png" href="favicon.png">
-
 <style>
 body{
   margin:0;
@@ -16,7 +15,6 @@ body{
   background:#f4f6fb;
   font-family:Arial, sans-serif;
 }
-
 .card{
   background:white;
   width:100%;
@@ -26,12 +24,10 @@ body{
   padding:40px 24px;
   text-align:center;
 }
-
 .logo{
   width:140px;
   margin-bottom:15px;
 }
-
 .check{
   width:70px;
   height:70px;
@@ -44,17 +40,14 @@ body{
   justify-content:center;
   margin:20px auto;
 }
-
 h1{
   margin:10px 0 5px;
   letter-spacing:2px;
 }
-
 .sub{
   color:#555;
   font-size:18px;
 }
-
 .footer{
   margin-top:15px;
   color:#64748b;
@@ -62,22 +55,14 @@ h1{
 }
 </style>
 </head>
-
 <body>
-
 <div class="card">
-
-  <img src="https://raw.githubusercontent.com/explorabardenas-web/confirmacion/69e171c62594b66ded98c6619639cd535f8a1c82/LOGO-EXPLORA-BARDENAS.png" class="logo">
-
+  <img src="https://raw.githubusercontent.com/explorabardenas-web/confirmacion/69e171c62594b66ded98c6619639cd535f8a1c82/LOGO-EXPLORA-BARDENAS.png" class="logo" alt="Explora Bardenas">
   <div class="check">✓</div>
-
   <h1 id="title">RESERVA CONFIRMADA</h1>
   <p class="sub" id="subtitle">Te esperamos</p>
-
   <div class="footer">Explora Bardenas</div>
-
 </div>
-
 <script>
 const texts = {
   es: {
@@ -86,7 +71,7 @@ const texts = {
   },
   en: {
     title: "BOOKING CONFIRMED",
-    subtitle: "We’ll see you soon"
+    subtitle: "We'll see you soon"
   },
   fr: {
     title: "RÉSERVATION CONFIRMÉE",
@@ -98,29 +83,30 @@ const texts = {
   }
 };
 
+// Obtener idioma de la URL
 const params = new URLSearchParams(window.location.search);
-
-// Intentar leer ?lang
 let lang = params.get("lang");
 
-// Si no hay parámetro, usar idioma del navegador
+// Si no hay parámetro lang, detectar idioma del navegador
 if (!lang) {
-  lang = navigator.language.slice(0,2);
+  const browserLang = navigator.language || navigator.userLanguage;
+  lang = browserLang.split('-')[0]; // Obtiene 'es' de 'es-ES'
 }
 
-// Si el idioma no está soportado, español por defecto
+// Si el idioma no está soportado, usar español por defecto
 if (!texts[lang]) {
   lang = "es";
 }
 
-// Aplicar textos
+// Actualizar el atributo lang del HTML
+document.documentElement.lang = lang;
+
+// Actualizar el título de la página
+document.title = texts[lang].title.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+
+// Actualizar contenido
 document.getElementById("title").textContent = texts[lang].title;
 document.getElementById("subtitle").textContent = texts[lang].subtitle;
-
-// Actualizar atributos de la página
-document.documentElement.lang = lang;
-document.title = texts[lang].title;
 </script>
-
 </body>
 </html>
