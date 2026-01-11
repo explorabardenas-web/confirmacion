@@ -82,29 +82,33 @@ h1{
 const texts = {
   es: {
     title: "RESERVA CONFIRMADA",
-    subtitle: "Te esperamos "
+    subtitle: "Te esperamos"
   },
   en: {
     title: "BOOKING CONFIRMED",
-    subtitle: "We’ll see you soon "
+    subtitle: "We’ll see you soon"
   },
   fr: {
     title: "RÉSERVATION CONFIRMÉE",
-    subtitle: "À très bientôt "
+    subtitle: "À très bientôt"
   },
   it: {
     title: "PRENOTAZIONE CONFERMATA",
-    subtitle: "Ti aspettiamo "
+    subtitle: "Ti aspettiamo"
   }
 };
 
-let lang = navigator.language.slice(0,2);
-if (!texts[lang]) lang = "en"; // Idioma por defecto SIEMPRE inglés
+const params = new URLSearchParams(window.location.search);
+let lang = params.get("lang") || "en";
+
+if (!texts[lang]) lang = "en";
 
 document.getElementById("title").textContent = texts[lang].title;
 document.getElementById("subtitle").textContent = texts[lang].subtitle;
 </script>
 
+
 </body>
 </html>
+
 
